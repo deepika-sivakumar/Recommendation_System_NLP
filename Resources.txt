@@ -1,0 +1,21 @@
+Add new columns to pandas:
+https://www.interviewqs.com/ddi_code_snippets/add_new_col_df_default_value
+
+apply() for pandas api calls:
+https://stackoverflow.com/questions/46799234/fastest-way-to-loop-over-pandas-dataframe-for-api-calls
+
+Fast ways of iterating pandas dataframe:
+https://medium.com/@rtjeannier/pandas-101-cont-9d061cb73bfc
+
+Get the first & last n rows of a pandas dataframe: df.head(n) or df.last(n)
+https://riptutorial.com/pandas/example/21739/get-the-first-last-n-rows-of-a-dataframe
+
+Construct a dataframe from API requests:
+Suchithra slack answer:
+Hi Deepika - I dont have an experience doing this. However, if I get a use case of this nature, I think I would try the following
+1. Can I multi thread API requests and send them in batches?
+2. Are there frameworks which can do a batch request (I think python supports BatchHttpRequest)
+3. Strip all API calls from the csv file (or whatever the source is), create a python batch script, run the same to fetch all details, store it in a file (all in batch). And then read that file in my ipynb and replace all reviews column with what I read.
+4. Assuming all urls go to the same source and the difference is just id, Check with the API source if they can provide a result given a set of ids
+5. Lastly screen scrape the reviews if they are from same source, given the id.
+Most likely I will do the 3rd one. Because in a production system, you cant wait for a long time even if it means I am multi threading the requests

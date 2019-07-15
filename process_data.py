@@ -10,6 +10,7 @@ Original file is located at
 import requests
 import json
 import pandas as pd
+import os
 
 class PROCESS_DATA(object):
   
@@ -37,13 +38,25 @@ class PROCESS_DATA(object):
       json_data = json.loads(data)
       # Convert the json list to a pandas dataframe
       df = pd.DataFrame(json_data)
+    path = 'dataset_practice'
+    df.to_csv(os.path.join(path,'blud.csv'), index = None, header=True)
     return success, df
 
 if __name__=="__main__":
+  directory = 'dataset_practice'
+  if not os.path.exists(directory):
+    os.makedirs(directory)
   process_data = PROCESS_DATA()
   success, df = process_data.get_api_response("http://tour-pedia.org/api/getReviewsByPlaceId?placeId=35537")
   print('*******************API Request Status**********************')
   if(success == True): print('Success!') 
   else: print('Failure!')
-  print('***************API Response as a Dataframe*****************')
-  print(df)
+  print('***************Reviews API Response as a Dataframe*****************')
+  print('Reviews by place RAW shape:',df.shape)
+  print('Reviews by place keys:')
+  print(df.keys())
+  print('Reviews by place head:')
+  print(df.head())
+#  print(df[['language','rating','text']])
+  
+#  print(df[df['language']=='en'].shape[0])
