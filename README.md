@@ -6,7 +6,7 @@ The user enters a few words to describe their emotions/desires.
 
 ## Dataset:
 List of **Places** and the **User Reviews** for various cities from the Tourpedia dataset accessible via Web API.
-<br/>**Tourpedia** contains information about points of interest and attractions of different places in Europe (Amsterdam, Barcelona, Berlin, Dubai, London, Paris, Rome and Tuscany). Data are extracted from four social media: Facebook, Foursquare, Google Places and Booking. 
+<br/>**Tourpedia** contains information about points of interest and attractions of different places in Europe (London, Amsterdam, Barcelona, Berlin, Dubai, Paris, Rome and Tuscany). Data are extracted from four social media: Facebook, Foursquare, Google Places and Booking. 
 <br/> http://tour-pedia.org/about/index.html
 
 ## Steps:
