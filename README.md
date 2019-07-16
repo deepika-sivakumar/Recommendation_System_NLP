@@ -9,6 +9,9 @@ List of **Places** and the **User Reviews** for various cities from the Tourpedi
 <br/>**Tourpedia** contains information about points of interest and attractions of different places in Europe (London, Amsterdam, Barcelona, Berlin, Dubai, Paris, Rome and Tuscany). Data are extracted from four social media: Facebook, Foursquare, Google Places and Booking. 
 <br/> http://tour-pedia.org/about/index.html
 
+## End-to-End Pipeline:
+<img src ="images/poi_rs_pipeline.jpg">
+
 ## Steps:
 
 ### Construct Datasets:
