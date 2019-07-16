@@ -2,7 +2,7 @@
 
 ## Project Description:
 The user enters a few words to describe their emotions/desires.
-<br/>The model analyses other people reviews using and recommends the places that best align with the user's interests.
+<br/>The model analyses other people reviews and recommends the places that best align with the user's descriptions.
 
 ## Dataset:
 List of **Places** and the **User Reviews** for various cities from the Tourpedia dataset accessible via Web API.
