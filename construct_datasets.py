@@ -20,7 +20,7 @@ class CONSTRUCT_DATASETS(object):
       os.makedirs(self.datsets_dir)
     self.places_url = 'http://tour-pedia.org/api/getPlaces?location={}&category=poi'.format(city)
     self.places_filename = 'tourpedia_{}_poi.csv'.format(city)
-    self.reviews_filename = 'datasets_new/tourpedia_{}_reviews.csv'.format(city)
+    self.reviews_filename = 'tourpedia_{}_reviews.csv'.format(city)
     self.places_df = pd.DataFrame()
     self.reviews_df = pd.DataFrame()
   
@@ -47,7 +47,7 @@ class CONSTRUCT_DATASETS(object):
     return success, df
   
   """
-    Function to construct list of places dataset for the city
+    Function to save the pandas dataframe to a CSV file
     df - pandas dataframe to be stored
     file_name - CSV file name
   """

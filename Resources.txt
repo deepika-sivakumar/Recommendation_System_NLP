@@ -10,6 +10,19 @@ https://medium.com/@rtjeannier/pandas-101-cont-9d061cb73bfc
 Get the first & last n rows of a pandas dataframe: df.head(n) or df.last(n)
 https://riptutorial.com/pandas/example/21739/get-the-first-last-n-rows-of-a-dataframe
 
+Google's pretrained word2vec model:
+https://www.kaggle.com/umbertogriffo/googles-trained-word2vec-model-in-python
+
+NLP text preprocessing with examples:
+https://medium.com/@datamonsters/text-preprocessing-in-python-steps-tools-and-examples-bf025f872908
+https://towardsdatascience.com/pre-processing-in-natural-language-machine-learning-898a84b8bd47
+
+Word embedding using word2vec:
+https://towardsdatascience.com/introduction-to-word-embedding-and-word2vec-652d0c2060fa
+
+word2vec recommender systems:
+https://blog.lipishala.com/2018/10/03/using-word2vec-to-create-recommendation-systems/
+
 Construct a dataframe from API requests:
 Suchithra slack answer:
 Hi Deepika - I dont have an experience doing this. However, if I get a use case of this nature, I think I would try the following
