@@ -10,7 +10,7 @@ List of **Places** and the **User Reviews** for various cities from the Tourpedi
 <br/> http://tour-pedia.org/about/index.html
 
 ## End-to-End Pipeline:
-<img src ="images/poi_rs_pipeline.jpg">
+<img src ="images/poi_rs_pipeline_1.jpg">
 
 ## Steps:
 
@@ -24,8 +24,17 @@ List of **Places** and the **User Reviews** for various cities from the Tourpedi
 
 * Select only the relevant columns.
 * Remove non-english review rows from the Reviews dataset.
-* Remove punctuation, stopwords
+* Remove Numbers, Punctuation, Stopwords, Tokenization
 
-### 
+### Load Model:
+
+* Load Google's pretrained word2vec model using gensim.
+* Construct Word vectors for people reviews & the user input.
+
+### Recommendation system:
+
+* Average across the word vectors for each review and also the user input.
+* Calculate Cosine Similarity between the review vectors and the user input.
+* Recommend the places which have most number of reviews closest to the user input.
 
 
