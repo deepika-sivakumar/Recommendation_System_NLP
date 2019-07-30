@@ -12,12 +12,12 @@ import os
 class CONSTRUCT_DATASETS(object):
   
   #Constructor 
-  def __init__(self, city, datsets_dir='datasets'):
+  def __init__(self, city, datasets_dir='datasets'):
     self.city = city
-    self.datsets_dir = datsets_dir
+    self.datasets_dir = datasets_dir
     # Create the datasets directory if it does not exists
-    if not os.path.exists(self.datsets_dir):
-      os.makedirs(self.datsets_dir)
+    if not os.path.exists(self.datasets_dir):
+      os.makedirs(self.datasets_dir)
     self.places_url = 'http://tour-pedia.org/api/getPlaces?location={}&category=poi'.format(city)
     self.places_filename = 'tourpedia_{}_poi.csv'.format(city)
     self.reviews_filename = 'tourpedia_{}_reviews.csv'.format(city)
@@ -53,7 +53,7 @@ class CONSTRUCT_DATASETS(object):
   """
   def save_to_csv(self, df, file_name):
     # Construct the path with directory and file name
-    path = os.path.join(self.datsets_dir, file_name)
+    path = os.path.join(self.datasets_dir, file_name)
     # Store the dataframe to a CSV file
     df.to_csv(path, index = None, header=True)
 
