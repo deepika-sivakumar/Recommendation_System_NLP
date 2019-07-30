@@ -77,26 +77,4 @@ if __name__ == "__main__":
   user_input = 'I like sports'#'Run animal fruit'
   sentence_vectors.calculate_cos_sim(user_input)
   sentence_vectors.recommendations()
-    
-#    df['wordvec'] = df['sentence'].apply(get_word_vec)
-#    print('After wordvec')
-#    print(df)
-
-"""
-model = gensim.models.KeyedVectors.load('google_w2vec_trim.model')
-words = 'I like you'.split()
-print('words:', words)
-sent1 = (model.wv[words[0]] + model.wv[words[1]] + model.wv[words[2]] ) / 3
-print('sent1:',sent1)
-
-words2 = 'I love you'.split()
-print('words2:', words2)
-sent2 = (model.wv[words2[0]] + model.wv[words2[1]] + model.wv[words2[2]] ) / 3
-print('sent1:',sent1)
-
-words3 = 'Come here monkey'.split()
-print('words3:', words3)
-sent3 = (model.wv[words3[0]] + model.wv[words3[1]] + model.wv[words3[2]] ) / 3
-print('sent3:',sent3)
-"""
 
