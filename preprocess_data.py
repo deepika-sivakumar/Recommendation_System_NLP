@@ -12,8 +12,8 @@ from nltk.corpus import stopwords
 class PREPROCESS_TEXT_DATA(object):
   
   #Constructor 
-  def __init__(self, city, datasets_dir='datasets'):
-    self.datsets_dir = datasets_dir
+  def __init__(self, city='London', datasets_dir='datasets'):
+    self.datasets_dir = datasets_dir
     self.places_file = 'tourpedia_{}_poi.csv'.format(city)
     self.reviews_file = 'tourpedia_{}_reviews.csv'.format(city)
     self.places_df = pd.read_csv(os.path.join(datasets_dir, self.places_file))
@@ -56,7 +56,7 @@ class PREPROCESS_TEXT_DATA(object):
   
 if __name__ == "__main__":
     # Preprocess dataset for London
-    preprocess_data = PREPROCESS_TEXT_DATA('London')
+    preprocess_data = PREPROCESS_TEXT_DATA(city='London')
     preprocess_data.clean_data()
   
     

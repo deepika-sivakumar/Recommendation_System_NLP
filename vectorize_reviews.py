@@ -4,32 +4,57 @@ Created on Mon Jul 22 17:32:57 2019
 
 @author: Deepika
 """
-
+import os
 import gensim
 import pandas as pd
 import numpy as np
 from nltk.tokenize import word_tokenize
 from sklearn.preprocessing import normalize
 from sklearn.metrics.pairwise import cosine_similarity
+import ast
 
 class VECTORIZE_TEXT(object):
   
-  def __init__(self):
+  def __init__(self,city='London', datasets_dir='datasets'):
+    self.datasets_dir = datasets_dir
+    self.places_file = 'tourpedia_{}_poi.csv'.format(city)
+    self.reviews_file = 'tourpedia_{}_reviews.csv'.format(city)
+    self.places_df = pd.read_csv(os.path.join(datasets_dir, self.places_file))
+    self.reviews_df = pd.read_csv(os.path.join(datasets_dir, self.reviews_file))
     self.model = gensim.models.KeyedVectors.load('google_w2vec_trim.model')
   
+  """
+    Function to save the pandas dataframe to a CSV file
+    df - pandas dataframe to be stored
+    file_name - CSV file name
+  """
+  def save_to_csv(self, df, file_name):
+    # Construct the path with directory and file name
+    path = os.path.join(self.datasets_dir, file_name)
+    # Store the dataframe to a CSV file
+    df.to_csv(path, index = None, header=True)
+
   def save_goog_model(self):
+    """
+    Function to load the Google's pretrained word2vec model and save a part of it as a custom model
+    Call this function only once in the beginning
+    """
     # Load Google's pre-trained Word2Vec model.
     model = gensim.models.KeyedVectors.load_word2vec_format('../google_word2vec_model/GoogleNews-vectors-negative300.bin', binary=True, limit=500000)  
     
     model.init_sims(replace=True)
     model.save('google_w2vec_trim.model')
   
-  def get_sent_vec(self, sent_tokens):
+  def get_sent_vec_norm(self, sent_tokens):
     arr = np.empty((0,300), float)
+    
     for word in sent_tokens:
-      wv = np.array(self.model.wv[word])[np.newaxis]
-      arr = np.append(arr, wv, axis=0)
-      
+      try:
+        wv = np.array(self.model.wv[word])[np.newaxis]
+        arr = np.append(arr, wv, axis=0)
+      except KeyError:
+        # If word not found, skip adding that vector
+        continue
     sum_vec = np.sum(arr, axis=0, keepdims=True)
     normed_vec = normalize(sum_vec)
     return normed_vec
@@ -37,44 +62,35 @@ class VECTORIZE_TEXT(object):
   def get_sent_vec_avg(self, sent_tokens):
     arr = np.empty((0,300), float)
     for word in sent_tokens:
-      wv = np.array(self.model.wv[word])[np.newaxis]
-      arr = np.append(arr, wv, axis=0)
-      
-    avg_vec = np.mean(arr, axis=0, keepdims=True)
+      try:
+        wv = np.array(self.model.wv[word])[np.newaxis]
+        arr = np.append(arr, wv, axis=0)
+      except KeyError:
+        # If word not found, skip adding that vector
+        continue
+    
+    if arr.size == 0:
+      avg_vec = np.zeros((1, 300), float)
+    else:
+      avg_vec = np.mean(arr, axis=0, keepdims=True)
     return avg_vec
   
-  def convert_sentence2vec(self):
-    self.df = pd.DataFrame(columns=['sentence','wordvec'])
-    self.df = self.df.append({'sentence': 'I love swimming'}, ignore_index=True)
-    self.df = self.df.append({'sentence': 'Come here monkey banana'}, ignore_index=True)
-
-    self.df['sentence'] = self.df['sentence'].apply(lambda sent: word_tokenize(sent))
-    self.df['normed_wordvec'] = self.df['sentence'].apply(self.get_sent_vec)
-    self.df['avg_wordvec'] = self.df['sentence'].apply(self.get_sent_vec_avg)
+  def vectorize_reviews(self):
+    # convert string to list
+    self.reviews_df['clean_reviews'] = self.reviews_df['clean_reviews'].apply(lambda string: ast.literal_eval(string))
+    self.reviews_df['normed_wordvec'] = self.reviews_df['clean_reviews'].apply(self.get_sent_vec_norm)
+    self.reviews_df['avg_wordvec'] = self.reviews_df['clean_reviews'].apply(self.get_sent_vec_avg)
+#    print('normed_wordvec************************')
+#    print('shape:',self.reviews_df['normed_wordvec'].shape)
+#    print(self.reviews_df['normed_wordvec'].head())
+#    print('avg_wordvec************************')
+#    print('shape:',self.reviews_df['avg_wordvec'].shape)
+#    print(self.reviews_df['avg_wordvec'].head())
     
-
-  def calculate_cos_sim(self, user_input):
-    input_vec = self.get_sent_vec(word_tokenize(user_input))
-    self.df['cosine_similarity_normed'] = self.df['normed_wordvec'].apply(lambda sent_vec: cosine_similarity(input_vec, sent_vec)[0][0])
-    self.df['cosine_similarity_avg'] = self.df['avg_wordvec'].apply(lambda sent_vec: cosine_similarity(input_vec, sent_vec)[0][0])
-  
-  def recommendations(self):
-    df_normed_sorted = self.df.sort_values(by=['cosine_similarity_normed'], ascending=False)
-    df_avg_sorted = self.df.sort_values(by=['cosine_similarity_avg'], ascending=False)
-    
-  def get_cos_similarity_eg(self):
-    banana = np.array(self.model.wv['banana'])[np.newaxis]
-    fruit = np.array(self.model.wv['fruit'])[np.newaxis]
-    gun = np.array(self.model.wv['gun'])[np.newaxis]
-    bf = cosine_similarity(banana, fruit)
-    bg = cosine_similarity(banana, gun)
+    self.save_to_csv(self.reviews_df, self.reviews_file )
     
 if __name__ == "__main__":
   sentence_vectors = VECTORIZE_TEXT()
-  sentence_vectors.convert_sentence2vec()
-#  sentence_vectors.get_cos_sim()
-#  sentence_vectors.get_cos_similarity_eg()
-  user_input = 'I like sports'#'Run animal fruit'
-  sentence_vectors.calculate_cos_sim(user_input)
-  sentence_vectors.recommendations()
+  sentence_vectors.vectorize_reviews()
 
+# self.reviews_df.loc[0,'clean_reviews']

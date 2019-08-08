@@ -12,7 +12,7 @@ import os
 class CONSTRUCT_DATASETS(object):
   
   #Constructor 
-  def __init__(self, city, datasets_dir='datasets'):
+  def __init__(self, city='London', datasets_dir='datasets'):
     self.city = city
     self.datasets_dir = datasets_dir
     # Create the datasets directory if it does not exists
@@ -77,6 +77,9 @@ class CONSTRUCT_DATASETS(object):
       self.save_to_csv(self.places_df, self.places_filename)
 #      self.places_df.to_csv(self.places_filename, index = None, header=True)
   
+  def load_places_dataset(self):
+    self.places_df = pd.read_csv(os.path.join(self.datasets_dir, self.places_file))
+
   """
     Function to construct reviews dataset for all the places of the city
   """
